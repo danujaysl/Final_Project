@@ -1,0 +1,1 @@
+print("leaf disease detected")
