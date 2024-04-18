@@ -29,8 +29,8 @@ class UserLogin(Resource):
         args = user_login_parser.parse_args()
         user = user_model.get_user_by_name(args['username'])
         if user:
-            if user and bcrypt.check_password_hash(user.password, args['password']):
-                return {"message": "success", "user": user.username}, 200
+            if user and bcrypt.check_password_hash(user['password'], args['password']):
+                return {"message": "success", "user": user['username']}, 200
             abort(400, message="Invalid Creditials")
         else:
             abort(404, message="Login failed")
