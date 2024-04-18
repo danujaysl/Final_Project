@@ -48,7 +48,7 @@ class Disease:
 
 # connect to MongoDB
 try:
-    client = pymongo.MongoClient("mongodb+srv://designerud28:*2021qwe@merncluster.8brpy3t.mongodb.net/")
+    client = pymongo.MongoClient("mongodb+srv://designerud28:*2022aaa@merncluster.8brpy3t.mongodb.net/")
     db = client["TomatoDB"]
     # create user collection
     user_model = User(db)
