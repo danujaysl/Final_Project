@@ -9,7 +9,7 @@ from sqlalchemy.exc import IntegrityError
 app = Flask(__name__)
 api = Api(app)
 CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://root:#Akash4906@localhost/plantdb"
+app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://root:#udanad@localhost/plantdb"
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 
