@@ -1,9 +1,7 @@
 from keras.models import load_model
-from keras.preprocessing.image import img_to_array
-from keras.preprocessing import image
-from PIL import Image
+from keras.utils import load_img, img_to_array
 import numpy as np
-import os
+
 
 class_labels = ['Tomato Bacterial Spot', 'Tomato Early Blight', 'Tomato Late Blight', 'Tomato Leaf Mold',
                   'Tomato Septoria Leaf Spot', 'Tomato Spider Mites Two Spotted Spider Mite',
@@ -12,7 +10,7 @@ class_labels = ['Tomato Bacterial Spot', 'Tomato Early Blight', 'Tomato Late Bli
 
 #loads the model
 def LoadModel():
-    model = load_model(r'model.h5')
+    model = load_model(r'tomato_disease.h5')
     return model
 
 # predicts the image by its path
@@ -63,7 +61,5 @@ def predict_image(img,model):
     print(f"Confidence: {confidence:.2%}")
 
     return (predicted_class,confidence)
-
-
 
 

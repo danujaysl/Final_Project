@@ -1,4 +1,5 @@
 import pymongo
+from model import class_labels
 
 # user model
 class User:
@@ -9,12 +10,13 @@ class User:
         self.collection.insert_one(user_data)
 
     def user_exists(self, email=None, username=None):
-        query = {}
-        if email:
-            query["email"] = email
-        if username:
-            query["username"] = username
-        return self.collection.find_one(query) is not None
+
+        if email==None:
+            email = ''
+        if username==None:
+            username = ''
+        print({"$or":[{"email":email},{"username":username}]})
+        return self.collection.find_one({"$or":[{"email":email},{"username":username}]}) is not None
 
     def get_user_by_name(self,user_name):
         return self.collection.find_one({"username":user_name})
@@ -29,6 +31,29 @@ class User:
         self.collection.delete_one({"_id": user_id})
 
 
+class SearchHistory:
+    def __init__(self, db):
+        self.collection = db['searchhistory']
+
+    def insert_search(self,disease_class,confidence_level,time,img_id,user_id):
+        hist_dict = {
+            "disease_class":disease_class,
+            "confidence":confidence_level,
+            "time":time,
+            "img_path":"uploads/"+img_id,
+            "user_id" : user_id
+        }
+        self.collection.insert_one(hist_dict)
+
+    def get_a_search(self,search_id):
+        return self.collection.find_one({"_id": search_id})
+
+    def get_all_search(self,user_id):
+        return self.collection.find({"user_id":user_id})
+
+
+
+
 # Disease Class
 class Disease:
     def __init__(self, db):
@@ -38,7 +63,7 @@ class Disease:
         self.collection.insert_one(disease_data)
 
     def get_disease_by_name(self, disease_name):
-        return self.collection.find_one({"name": disease_name})
+        return self.collection.find_one({"disease": disease_name})
 
     def update_disease(self, disease_name, new_data):
         self.collection.update_one({"name": disease_name}, {"$set": new_data})
@@ -48,7 +73,7 @@ class Disease:
 
 # connect to MongoDB
 try:
-    client = pymongo.MongoClient("mongodb+srv://designerud28:*2022aaa@merncluster.8brpy3t.mongodb.net/")
+    client = pymongo.MongoClient("mongodb+srv://designerud28:*2022aaa@cluster0.24bmwfn.mongodb.net/")
     db = client["TomatoDB"]
     # create user collection
     user_model = User(db)
@@ -56,9 +81,14 @@ try:
     # create disease collection
     disease_model = Disease(db)
 
+
+    # create search history
+    search_history_model = SearchHistory(db)
+
     print("database connected")
 
-except:
+except Exception as e:
+
     print("failed to connect the database")
 
 
