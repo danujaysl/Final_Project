@@ -172,7 +172,7 @@ const Navbar = (props) => {
               fontFamily: "'Courier Prime', monospace",
             }}
           >
-            GreenGuardian
+            Tomato Leaf Guard
           </Typography>
           <Typography
             variant="h6"
@@ -181,9 +181,9 @@ const Navbar = (props) => {
               fontFamily: "'Courier Prime', monospace",
             }}
           >
-            GreenGuardian
+            Tomato Leaf Guard
           </Typography>
-          <Search sx={{ "&:hover": { backgroundColor: props.hoverColor } }}>
+          {/* <Search sx={{ "&:hover": { backgroundColor: props.hoverColor } }}>
             <InputBase
               placeholder="Search"
               sx={{ paddingRight: { sm: "0px", lg: "50px" } }}
@@ -191,7 +191,7 @@ const Navbar = (props) => {
             <Box sx={{ display: "flex", justifyContent: "center" }}>
               <Srch />
             </Box>
-          </Search>
+          </Search> */}
         </LogoBox>
 
         <MenuButton

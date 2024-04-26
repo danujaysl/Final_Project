@@ -4,7 +4,7 @@ import secrets  # For generating secure secret key
 
 SECRET_KEY = "akash"
 
-EXPIRATION_SECONDS = 3600  # 1 hour
+EXPIRATION_SECONDS = 3600/2 # 1 hour
 
 
 def generate_token(user_id):

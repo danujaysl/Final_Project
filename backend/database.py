@@ -1,5 +1,6 @@
 import pymongo
 from model import class_labels
+from bson import ObjectId
 
 # user model
 class User:
@@ -22,10 +23,11 @@ class User:
         return self.collection.find_one({"username":user_name})
 
     def get_user_by_id(self, user_id):
-        return self.collection.find_one({"_id": user_id})
+        return self.collection.find_one(ObjectId(user_id))
 
     def update_user(self, user_id, new_data):
-        self.collection.update_one({"_id": user_id}, {"$set": new_data})
+        print(new_data)
+        self.collection.find_one_and_update({"_id": ObjectId(user_id)}, {"$set": new_data})
 
     def delete_user(self, user_id):
         self.collection.delete_one({"_id": user_id})
@@ -73,7 +75,7 @@ class Disease:
 
 # connect to MongoDB
 try:
-    client = pymongo.MongoClient("mongodb+srv://designerud28:*2022aaa@cluster0.24bmwfn.mongodb.net/")
+    client = pymongo.MongoClient("mongodb+srv://akash:akash123@cluster0.24bmwfn.mongodb.net/")
     db = client["TomatoDB"]
     # create user collection
     user_model = User(db)

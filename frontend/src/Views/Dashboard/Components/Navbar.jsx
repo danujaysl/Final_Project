@@ -184,7 +184,11 @@ const Navbar = (props) => {
     Axios.post("/find-user",user)
       .then((response) => {
         
-        console.log(response.data)
+        console.log(response)
+        setUser({
+          username: response.data.user_name,
+          email:response.data.email
+        })
       })
       .catch((er) => {
         navigate("/expire")
@@ -196,7 +200,6 @@ const Navbar = (props) => {
   const initialUser = {
     username: "JohnDoe",
     email: "johndoe@example.com",
-    phoneNumber: "123-456-7890",
   };
 
   const [dialogProfileOpen, setDialogProfileOpen] = useState(false);
@@ -232,7 +235,7 @@ const Navbar = (props) => {
                 fontFamily: "'Courier Prime', monospace",
               }}
             >
-              Green Gaurdian
+              Tomato Leaf Guard
             </Typography>
             <Typography
               variant="h6"

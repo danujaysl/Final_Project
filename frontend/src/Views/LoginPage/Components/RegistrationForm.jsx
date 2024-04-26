@@ -22,6 +22,7 @@ import axios from "../../../api/axios";
 import CustomLinkButton from "../../../CommonComponents/LinkButton";
 import Footer from "../../../CommonComponents/Footer";
 import lottie from "lottie-web";
+import validator from 'validator';
 
 const TextBox = styled(TextField)({
   width: "100%",
@@ -42,10 +43,6 @@ const TextBox = styled(TextField)({
   "& label.Mui-focused": {
     color: "#12372A",
   },
-});
-
-const Image = styled("img")({
-  objectFit: "fill",
 });
 
 const fieldProp = {
@@ -90,18 +87,6 @@ function SlideTransition(props) {
   return <Slide {...props} direction="up" />;
 }
 
-const UserButton = styled(CustomLinkButton)({
-    "&:hover": {
-      backgroundColor: "#0C356A", 
-      color: "white", 
-    },
-
-    borderColor: "#0C356A", 
-    borderWidth: 1, 
-    borderStyle: "solid",
-    color: "#0C356A",
-  });
-
 
 
 export default function Form() {
@@ -131,23 +116,22 @@ export default function Form() {
       const data = {
         username: arr[0],
         password: arr[1],
+        email: arr[2]
       };
 
       console.log(data)
       axios
-        .post("/login", data)
+        .post("/users", data)
         .then((res) => {
-          console.log(res.data);
-          localStorage.setItem('user', JSON.stringify({"username":res.data.user,"token":res.data.token}));
-          
-          setsccMSG("Login succeed");
+          console.log(res);
+          setsccMSG("Registration succeed");
           setSeverity("success");
           setsccColor("#03C988");
-          navigate("/userdashboard");
+          navigate("/");
         })
         .catch((err) => {
-          console.log("Login Failed");
-          setsccMSG("Login Failed");
+          console.log(err);
+          setsccMSG(err.response.data.message);
           setSeverity("error");
           setsccColor("#F24C3D");
         });
@@ -169,7 +153,22 @@ export default function Form() {
       isPasswordNull = false;
     }
 
-    if (!isNameNull && !isPasswordNull) {
+    
+    if (arr[2] === "") {
+    setEmailErr("Email is not provided");
+    isEmailNull = true;
+
+    }
+    else if(!validator.isEmail(arr[2])){
+        setEmailErr("Provide a valid email");
+        isEmailNull = true;
+    }
+    else {
+    setEmailErr("");
+    isEmailNull = false;
+    }
+
+    if (!isNameNull && !isPasswordNull && !isEmailNull) {
       
       post(arr);
       setsccMSG("Loading..");
@@ -177,17 +176,20 @@ export default function Form() {
       setsccColor("#FFCC70");
 
     } else {
-      setsccMSG("Please fill both fields");
+      setsccMSG("Please fill all fields");
       setsccColor("#F24C3D");
       setSeverity("error");
     }
   };
 
   var isNameNull,
-    isPasswordNull = false;
+    isPasswordNull,isEmailNull = false;
+
   let navigate = useNavigate();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [email,setEmail] = useState("");
+  const [emailErr,setEmailErr] = useState("");
   const [nameErr, setNameErr] = useState("");
   const [sccColor, setsccColor] = useState("");
   const [passwordErr, setPasswordErr] = useState("");
@@ -199,10 +201,12 @@ export default function Form() {
   });
 
   const handleClick = (Transition) => {
+
     setState({
       open: true,
       Transition,
     });
+
   };
 
   const handleClose = () => {
@@ -212,7 +216,7 @@ export default function Form() {
     });
   };
 
-  const valueList = [name, password];
+  const valueList = [name, password,email];
 
   
 
@@ -308,7 +312,7 @@ export default function Form() {
                         color: "#12372A",
                       }}
                     >
-                      Login
+                      Sign Up
                     </Typography>
 
                     <TextBox
@@ -342,6 +346,22 @@ export default function Form() {
                         {passwordErr}
                       </Typography>
                     )}
+
+                    <TextBox
+                      label="Email"
+                      type="email"
+                      variant="outlined"
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                      }}
+                    >
+                      {" "}
+                    </TextBox>
+                    {isEmailNull !== true && (
+                      <Typography variant="body2" sx={{ color: "red" }}>
+                        {emailErr}
+                      </Typography>
+                    )}
                   
                   </Stack>
                 </CardContent>
@@ -363,7 +383,7 @@ export default function Form() {
                       handleClick(SlideTransition);
                     }}
                   >
-                    Login
+                    Sign Up
                   </Button>
                 </CardActions>
               </Card>

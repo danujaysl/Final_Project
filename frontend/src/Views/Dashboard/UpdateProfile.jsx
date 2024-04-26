@@ -9,6 +9,8 @@ import {
 } from '@mui/material';
 import Axios from '../../api/axios';
 import { useSnackbar } from '../../CommonComponents/SnackBarContext';
+import validator from 'validator';
+
 
 const EditProfileDialog = ({ open, onClose, user, onUpdateUser }) => {
 
@@ -25,10 +27,28 @@ const EditProfileDialog = ({ open, onClose, user, onUpdateUser }) => {
     
     setEditedUser({...user})
   },[user])
+
   const handleSubmit = async () => {
     try {
+
+      if(!validator.isEmail(editedUser.email)){
+        openSnackbar({
+          message: `Please provide a valid email`,
+          color:'red',
+      
+        })
+
+        return
+      }
+
+      const token = JSON.parse(localStorage.getItem('user'))?.token
+
+        const headers = {
+            Authorization: `Bearer ${token}`
+        };
+
      
-      await Axios.put('/user/updateUser', editedUser);
+      await Axios.put('/user/updateUser',editedUser,{headers});
 
       // Update the user locally
       onUpdateUser(editedUser);
@@ -43,7 +63,7 @@ const EditProfileDialog = ({ open, onClose, user, onUpdateUser }) => {
       console.error('Error updating profile:', error);
       openSnackbar({
         message: `User update fail`,
-        color:'green',
+        color:'red',
     
 })
     }
@@ -54,10 +74,10 @@ const EditProfileDialog = ({ open, onClose, user, onUpdateUser }) => {
       <DialogTitle>Edit Profile</DialogTitle>
       <DialogContent sx={{display:'flex',gap:2, flexDirection:'column',width:'600px'}}>
         <TextField
-          name="nic"
-          label="Nic"
+          name="username"
+          label="Username"
           fullWidth
-          value={editedUser.nic}
+          value={editedUser.username}
           onChange={handleChange}
           sx={{marginTop:'20px'}}
         />
@@ -68,13 +88,7 @@ const EditProfileDialog = ({ open, onClose, user, onUpdateUser }) => {
           value={editedUser.email}
           onChange={handleChange}
         />
-        <TextField
-          name="phoneNumber"
-          label="Phone Number"
-          fullWidth
-          value={editedUser.phoneNumber}
-          onChange={handleChange}
-        />
+      
         <Button variant="contained" color="primary" onClick={handleSubmit}>
           Save
         </Button>

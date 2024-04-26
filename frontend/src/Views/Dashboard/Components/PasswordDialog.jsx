@@ -35,9 +35,15 @@ const PasswordChangeDialog = ({ open, onClose }) => {
     })
         return;
       }
+
+      const token = JSON.parse(localStorage.getItem('user'))?.token
+
+      const headers = {
+        Authorization: `Bearer ${token}`
+    };
   
       
-      Axios.post('/user/updatepass', { oldPassword, newPassword })
+      Axios.put('/user/updatepass', { oldPassword, newPassword },{headers})
         .then((response) => {
           
           console.log(response.data);

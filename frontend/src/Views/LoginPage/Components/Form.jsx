@@ -22,7 +22,6 @@ import axios from "../../../api/axios";
 import CustomLinkButton from "../../../CommonComponents/LinkButton";
 import Footer from "../../../CommonComponents/Footer";
 import lottie from "lottie-web";
-import validator from 'validator';
 
 const TextBox = styled(TextField)({
   width: "100%",
@@ -43,6 +42,10 @@ const TextBox = styled(TextField)({
   "& label.Mui-focused": {
     color: "#12372A",
   },
+});
+
+const Image = styled("img")({
+  objectFit: "fill",
 });
 
 const fieldProp = {
@@ -87,6 +90,17 @@ function SlideTransition(props) {
   return <Slide {...props} direction="up" />;
 }
 
+const UserButton = styled(CustomLinkButton)({
+    "&:hover": {
+      backgroundColor: "#0C356A", 
+      color: "white", 
+    },
+    borderColor: "#0C356A", 
+    borderWidth: 1, 
+    borderStyle: "solid",
+    color: "#0C356A",
+  });
+
 
 
 export default function Form() {
@@ -116,22 +130,23 @@ export default function Form() {
       const data = {
         username: arr[0],
         password: arr[1],
-        email: arr[2]
       };
 
       console.log(data)
       axios
-        .post("/users", data)
+        .post("/login", data)
         .then((res) => {
-          console.log(res);
-          setsccMSG("Registration succeed");
+          console.log(res.data);
+          localStorage.setItem('user', JSON.stringify({"username":res.data.user,"token":res.data.token}));
+          
+          setsccMSG("Login succeed");
           setSeverity("success");
           setsccColor("#03C988");
-          navigate("/userlogin");
+          navigate("/userdashboard");
         })
         .catch((err) => {
-          console.log(err);
-          setsccMSG(err.response.data.message);
+          console.log("Login Failed");
+          setsccMSG("Login Failed");
           setSeverity("error");
           setsccColor("#F24C3D");
         });
@@ -153,43 +168,25 @@ export default function Form() {
       isPasswordNull = false;
     }
 
-    
-    if (arr[2] === "") {
-    setEmailErr("Email is not provided");
-    isEmailNull = true;
-
-    }
-    else if(!validator.isEmail(arr[2])){
-        setEmailErr("Provide a valid email");
-        isEmailNull = true;
-    }
-    else {
-    setEmailErr("");
-    isEmailNull = false;
-    }
-
-    if (!isNameNull && !isPasswordNull && !isEmailNull) {
+    if (!isNameNull && !isPasswordNull) {
       
       post(arr);
       setsccMSG("Loading..");
       setSeverity("warning");
-      setsccColor("#FFCC70");
+      setsccColor("black");
 
     } else {
-      setsccMSG("Please fill all fields");
+      setsccMSG("Please fill both fields");
       setsccColor("#F24C3D");
       setSeverity("error");
     }
   };
 
   var isNameNull,
-    isPasswordNull,isEmailNull = false;
-
+    isPasswordNull = false;
   let navigate = useNavigate();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const [email,setEmail] = useState("");
-  const [emailErr,setEmailErr] = useState("");
   const [nameErr, setNameErr] = useState("");
   const [sccColor, setsccColor] = useState("");
   const [passwordErr, setPasswordErr] = useState("");
@@ -201,12 +198,10 @@ export default function Form() {
   });
 
   const handleClick = (Transition) => {
-
     setState({
       open: true,
       Transition,
     });
-
   };
 
   const handleClose = () => {
@@ -216,7 +211,7 @@ export default function Form() {
     });
   };
 
-  const valueList = [name, password,email];
+  const valueList = [name, password];
 
   
 
@@ -252,7 +247,9 @@ export default function Form() {
               >
                 {/*image holder*/}
                 <Box sx={descboxprop}>
-                <div ref={container} id="animation-container" style={{height:'300px'}}></div>
+                <Box component="div" ref={container} id="animation-container" style={{height:'300px',marginTop:{
+                  sx:'0px',lg:'-300px'
+                }}}></Box>
                   <Typography
                     variant="h3"
                     sx={{
@@ -260,7 +257,7 @@ export default function Form() {
                       color: "white",
                     }}
                   >
-                    GreenGuardian
+                    Tomato Leaf Guard
                   </Typography>
                 </Box>
 
@@ -312,7 +309,7 @@ export default function Form() {
                         color: "#12372A",
                       }}
                     >
-                      Sign Up
+                      Login
                     </Typography>
 
                     <TextBox
@@ -346,22 +343,6 @@ export default function Form() {
                         {passwordErr}
                       </Typography>
                     )}
-
-                    <TextBox
-                      label="Email"
-                      type="email"
-                      variant="outlined"
-                      onChange={(e) => {
-                        setEmail(e.target.value);
-                      }}
-                    >
-                      {" "}
-                    </TextBox>
-                    {isEmailNull !== true && (
-                      <Typography variant="body2" sx={{ color: "red" }}>
-                        {emailErr}
-                      </Typography>
-                    )}
                   
                   </Stack>
                 </CardContent>
@@ -383,7 +364,7 @@ export default function Form() {
                       handleClick(SlideTransition);
                     }}
                   >
-                    Sign Up
+                    Login
                   </Button>
                 </CardActions>
               </Card>

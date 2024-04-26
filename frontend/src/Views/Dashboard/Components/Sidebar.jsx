@@ -14,7 +14,9 @@ import {
   Bloodtype,
   Report,
   Inbox,
-  Dashboard
+  Dashboard,
+  HistoryRounded,
+  SearchOutlined
   
 } from "@mui/icons-material";
 
@@ -117,7 +119,7 @@ const Sidebar = (props) => {
           <ListItem disablePadding>
             <ListItemButton selected={selectedItem===state[0]} onClick={()=>{setSelectedItem(state[0])}} sx={ListButtonProp(props)}>
               <ListItemIcon>
-                <Group sx={IconProp(props)}/>
+                <SearchOutlined sx={IconProp(props)}/>
               </ListItemIcon>
               <ListText sx={{display:{xs:'none',md:'block'}}} primary={state[0]} />
             </ListItemButton>
@@ -127,7 +129,7 @@ const Sidebar = (props) => {
           <ListItem disablePadding>
             <ListItemButton selected={selectedItem===state[1]} onClick={()=>{setSelectedItem(state[1])}} sx={ListButtonProp(props)}>
               <ListItemIcon>
-                <Explore sx={IconProp(props)}/>
+                <HistoryRounded sx={IconProp(props)} />
               </ListItemIcon>
               <ListText  sx={{display:{xs:'none',md:'block'}}} primary={state[1]}/>
             </ListItemButton >

@@ -116,7 +116,6 @@ def check_token_availability():
             return bearer_status[3]
 
 
-
         return token
     except ValueError:
         return bearer_status[2]  # Unauthorized
@@ -134,6 +133,53 @@ def allowed_file(filename):
   return '.' in filename and \
          filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+@app.route('/user/updatepass', methods=['PUT'])
+def update_pass():
+
+    status = check_token_availability()
+
+    if status in bearer_status:
+        return {"message":status}, 401
+
+    user_id = is_validate_user(status)
+
+    old_pass = request.get_json()['oldPassword']
+    new_pass = request.get_json()['newPassword']
+
+    user = user_model.get_user_by_id(user_id)
+
+    print(user)
+
+    if user and bcrypt.check_password_hash(user['password'], old_pass):
+        hashed_password = bcrypt.generate_password_hash(new_pass).decode('utf-8')
+        user_model.update_user(user_id,new_data={'password':hashed_password})
+
+        return {"message":"password updated"}, 204
+
+    return  {"message":"password update failed"}, 400
+
+
+
+
+@app.route('/user/updateUser', methods=['PUT'])
+def update_user():
+
+    status = check_token_availability()
+
+    if status in bearer_status:
+        return {"message":status}, 401
+
+    user_id = is_validate_user(status)
+
+    user_name = request.get_json()['username']
+    email = request.get_json()['email']
+
+    print(email)
+    user_model.update_user(user_id=user_id,new_data={'email':email,'username':user_name})
+
+    return {"message":"success"},204
+
+
 
 @app.route('/find-user', methods=['POST'])
 def get_user():
@@ -141,10 +187,14 @@ def get_user():
     try:
         user_id =is_validate_user(request.get_json()['token'])
 
+
         if user_id==None:
             return {"message":"token is expired"}, 401
 
-        return {"message":"success","data":str(user_id)}, 200
+        user = user_model.get_user_by_id(user_id)
+        print(user)
+
+        return {"message":"success","data":str(user_id),"user_name":user['username'],'email':user['email']}, 200
     except Exception as e:
        return {"message":"Un-Authorized access detect"}, 401
 
