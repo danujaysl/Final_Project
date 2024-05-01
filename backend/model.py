@@ -1,3 +1,5 @@
+import os
+os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 from keras.models import load_model
 from keras.utils import load_img, img_to_array
 import numpy as np
@@ -10,7 +12,7 @@ class_labels = ['Tomato Bacterial Spot', 'Tomato Early Blight', 'Tomato Late Bli
 
 #loads the model
 def LoadModel():
-    model = load_model(r'tomato_disease.h5')
+    model = load_model(r'tomato_diseaseORG.h5')
     return model
 
 # predicts the image by its path

@@ -11,6 +11,7 @@ import { Snackbar as SnackbarMui, SnackbarContent } from "@mui/material";
 import UserRegistrationPage from "./Views/LoginPage/RegistrationPage";
 import UserPage from "./Views/Dashboard/DasboardPage";
 import SessionExpiredPage from "./CommonComponents/SessionExpired";
+import ContactPage from "./Views/LoginPage/ContactPage";
 
 
 const router = createBrowserRouter(
@@ -22,6 +23,7 @@ const router = createBrowserRouter(
       <Route path="/signup" element={<UserRegistrationPage/>} />   
       <Route path="/userdashboard" element={<UserPage />} />   
       <Route path="/expire" element={<SessionExpiredPage />} />
+      <Route path="/contact" element={<ContactPage />} /> 
       <Route path="*" element={<PageNotFound error="Page Not Found 404" />} />
       
     </Route>

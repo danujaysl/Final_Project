@@ -260,7 +260,7 @@ export default function Form() {
                       color: "white",
                     }}
                   >
-                    GreenGuardian
+                    Tomato Leaf Guard
                   </Typography>
                 </Box>
 
