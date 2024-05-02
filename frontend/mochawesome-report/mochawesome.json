@@ -1,0 +1,181 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 5,
+    "passes": 4,
+    "pending": 0,
+    "failures": 1,
+    "start": "2024-04-27T14:20:57.578Z",
+    "end": "2024-04-27T14:21:37.857Z",
+    "duration": 40279,
+    "testsRegistered": 5,
+    "passPercent": 80,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "b7a3df7a-9865-4164-b15a-1123d6d66223",
+      "title": "",
+      "fullFile": "D:\\MERN projects\\plant_disease_detector\\tests\\FrontendTest.test.js",
+      "file": "\\tests\\FrontendTest.test.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "f3c91992-f788-45a2-9d4d-9f310bcb3896",
+          "title": "Testing the user functionaluity",
+          "fullFile": "D:\\MERN projects\\plant_disease_detector\\tests\\FrontendTest.test.js",
+          "file": "\\tests\\FrontendTest.test.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "successfull profile update",
+              "fullTitle": "Testing the user functionaluity successfull profile update",
+              "timedOut": false,
+              "duration": 15854,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "let driver = await new Builder().forBrowser(\"chrome\").build();\nawait driver.get(\"http://localhost:3000\");\n//sending text to the email field\nawait driver\n  .findElement(By.xpath('//*[@id=\":r0:\"]'))\n  .sendKeys(\"udana\");\n//sending password to the password field\nawait driver.findElement(By.xpath('//*[@id=\":r1:\"]')).sendKeys(\"123\");\n//clicking login button\nawait driver\n  .findElement(\n    By.xpath('//*[@id=\"root\"]/div/div[1]/div/div[2]/div/div/div[2]/button')\n  )\n  .click();\n\nawait driver.sleep(3000).then(async () => {\n\n  let username = null\n  // click menu button\n  await driver\n  .findElement(By.xpath('//*[@id=\"menu-button\"]')).click()\n  await driver\n  .findElement(By.xpath('//*[@id=\"menu\"]/div[3]/ul/li[2]')).click()\n\n  await driver.sleep(1000).then(async()=>{\n\n    const usertxt = await driver\n    .findElement(By.id('text-username'))\n    usertxt.click()\n    usertxt.sendKeys(Key.CONTROL+'A')\n    await usertxt.sendKeys(Key.BACK_SPACE)\n    \n\n    await usertxt.sendKeys(\"udana\")\n    \n    const emailtx = await driver\n    .findElement(By.id('text-email'))\n    emailtx.click()\n    emailtx.sendKeys(Key.CONTROL+'A')\n    emailtx.sendKeys(Key.BACK_SPACE)\n    await driver\n    .findElement(By.id('text-email'))\n    .sendKeys(\"udana1@gmail.com\");\n    await driver\n    .findElement(By.xpath('/html/body/div[3]/div[3]/div/div/button')).click()\n  })\n\n});\nawait driver.sleep(2000).then(async()=>{\n const menu = await driver\n  .findElement(By.xpath('//*[@id=\"menu-button\"]/div'))\n  menu.click()\n  await driver.sleep(2000).then(async()=>{\n    await driver\n    .findElement(By.xpath('//*[@id=\"menu\"]/div[3]/ul/li[1]')).click()\n  \n    await driver\n    .findElement(By.xpath('/html/body/div[3]/div[3]/div/div/div/p[1]'))\n    .getText()\n    .then((value) => {\n      console.log(value);\n  \n      username = value\n    });\n  })\n  \n \n})\n\nawait driver.close();\nassert.strictEqual(username, \"udana1\");",
+              "err": {
+                "message": "AssertionError: Expected values to be strictly equal:\n+ actual - expected\n\n+ 'Username: udana'\n- 'udana1'",
+                "estack": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n+ actual - expected\n\n+ 'Username: udana'\n- 'udana1'\n    at Context.<anonymous> (tests\\FrontendTest.test.js:106:12)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                "diff": "- Username: udana\n+ udana1\n"
+              },
+              "uuid": "bd4726da-6e15-41b7-a243-333166fad77b",
+              "parentUUID": "f3c91992-f788-45a2-9d4d-9f310bcb3896",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Successful user login",
+              "fullTitle": "Testing the user functionaluity Successful user login",
+              "timedOut": false,
+              "duration": 5064,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "let driver = await new Builder().forBrowser(\"chrome\").build();\nawait driver.get(\"http://localhost:3000\");\n\n//sending text to the email field\nawait driver\n  .findElement(By.xpath('//*[@id=\":r0:\"]'))\n  .sendKeys(\"udana\");\n//sending password to the password field\nawait driver.findElement(By.xpath('//*[@id=\":r1:\"]')).sendKeys(\"123\");\n//clicking login button\nawait driver\n  .findElement(\n    By.xpath('//*[@id=\"root\"]/div/div[1]/div/div[2]/div/div/div[2]/button')\n  )\n  .click();\ndriver.sleep(2000).then(async () => {\n  await driver\n    .findElement(By.xpath('//*[@id=\"List\"]/li[1]/div/div[2]/span'))\n    .getText()\n    .then((value) => {\n      console.log(value);\n      return value;\n    });\n  await driver.close();\n  assert.strictEqual(value, \"Username: Detect Disease\");\n});",
+              "err": {},
+              "uuid": "66a297f8-7b0e-4ddb-b4d7-a923414e0630",
+              "parentUUID": "f3c91992-f788-45a2-9d4d-9f310bcb3896",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Invalid login user login",
+              "fullTitle": "Testing the user functionaluity Invalid login user login",
+              "timedOut": false,
+              "duration": 5952,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "let driver = await new Builder().forBrowser(\"chrome\").build();\nawait driver.get(\"http://localhost:3000\");\n\n//sending text to the email field\nawait driver\n  .findElement(By.xpath('//*[@id=\":r0:\"]'))\n  .sendKeys(\"fasdf\");\n//sending password to the password field\nawait driver.findElement(By.xpath('//*[@id=\":r1:\"]')).sendKeys(\"123\");\n//clicking login button\nawait driver\n  .findElement(\n    By.xpath('//*[@id=\"root\"]/div/div[1]/div/div[2]/div/div/div[2]/button')\n  )\n  .click();\ndriver.sleep(1000).then(async () => {\n  await driver\n    .findElement(By.xpath(\"//*[@id='root']/div/div[2]/div/div/div[2]\"))\n    .getText()\n    .then((value) => {\n      console.log(value);\n      return value;\n    });\n  await driver.close();\n  assert.strictEqual(value, \"Login Failed\");\n});",
+              "err": {},
+              "uuid": "c81c05e3-9552-431d-ba7e-45a9cf733f05",
+              "parentUUID": "f3c91992-f788-45a2-9d4d-9f310bcb3896",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Menu tabs working test",
+              "fullTitle": "Testing the user functionaluity Menu tabs working test",
+              "timedOut": false,
+              "duration": 5839,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "let driver = await new Builder().forBrowser(\"chrome\").build();\nawait driver.get(\"http://localhost:3000\");\n\n//sending text to the email field\nawait driver\n  .findElement(By.xpath('//*[@id=\":r0:\"]'))\n  .sendKeys(\"udana\");\n//sending password to the password field\nawait driver.findElement(By.xpath('//*[@id=\":r1:\"]')).sendKeys(\"123\");\n//clicking login button\nawait driver\n  .findElement(\n    By.xpath('//*[@id=\"root\"]/div/div[1]/div/div[2]/div/div/div[2]/button')\n  )\n  .click();\ndriver.sleep(2000).then(async () => {\n    await driver\n    .findElement(By.xpath(\"//*[@id='List']/li[2]\")).click()\n  await driver\n    .findElement(By.xpath(\"//*[@id='List']/li[2]\"))\n    .getText()\n    .then((value) => {\n      console.log(value);\n      return value;\n    });\n  await driver.close();\n  assert.strictEqual(value, \"Search History\");\n});",
+              "err": {},
+              "uuid": "9113c36c-147a-4e66-80b8-afe275603d6a",
+              "parentUUID": "f3c91992-f788-45a2-9d4d-9f310bcb3896",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "successful logout",
+              "fullTitle": "Testing the user functionaluity successful logout",
+              "timedOut": false,
+              "duration": 7559,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "let driver = await new Builder().forBrowser(\"chrome\").build();\nawait driver.get(\"http://localhost:3000\");\n\n//sending text to the email field\nawait driver\n  .findElement(By.xpath('//*[@id=\":r0:\"]'))\n  .sendKeys(\"udana\");\n//sending password to the password field\nawait driver.findElement(By.xpath('//*[@id=\":r1:\"]')).sendKeys(\"123\");\n//clicking login button\nawait driver\n  .findElement(\n    By.xpath('//*[@id=\"root\"]/div/div[1]/div/div[2]/div/div/div[2]/button')\n  )\n  .click();\ndriver.sleep(2000).then(async () => {\n    await driver\n    .findElement(By.xpath('//*[@id=\"menu-button\"]')).click()\n    await driver\n    .findElement(By.xpath('//*[@id=\"menu\"]/div[3]/ul/li[4]')).click()\n    await driver\n    .findElement(By.xpath('/html/body/div[3]/div[3]/div/div[2]/button[2]')).click()\n\n    await driver\n    .findElement(By.xpath('//*[@id=\"root\"]/div/div[1]/div/div[1]/div/div/div/h3'))\n    .getText()\n    .then((value) => {\n      console.log(value);\n      return value;\n    });\n  await driver.close();\n  assert.strictEqual(value, \"Tomato Leaf Guard\");\n});",
+              "err": {},
+              "uuid": "3843a394-ea4c-44d8-8805-2f91cc30b6ca",
+              "parentUUID": "f3c91992-f788-45a2-9d4d-9f310bcb3896",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "66a297f8-7b0e-4ddb-b4d7-a923414e0630",
+            "c81c05e3-9552-431d-ba7e-45a9cf733f05",
+            "9113c36c-147a-4e66-80b8-afe275603d6a",
+            "3843a394-ea4c-44d8-8805-2f91cc30b6ca"
+          ],
+          "failures": [
+            "bd4726da-6e15-41b7-a243-333166fad77b"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 40268,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 0
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 0
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "10.4.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": null,
+      "version": "6.2.0"
+    }
+  }
+}

@@ -2,7 +2,7 @@ import datetime
 import jwt
 import secrets  # For generating secure secret key
 
-SECRET_KEY = "akash"
+SECRET_KEY = "udanad"
 
 EXPIRATION_SECONDS = 3600/2 # 1 hour
 
