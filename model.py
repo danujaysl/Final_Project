@@ -43,7 +43,7 @@ def predict_image_by_img_path(img_path,model):
 
 #predicts the raw image
 def predict_image(img,model):
-    # convert image into areay
+    #convert image into areay
     img_arr = img_to_array(img)
 
     #Normalize pixel values to [0, 1]
