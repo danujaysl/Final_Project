@@ -7,7 +7,7 @@ import numpy as np
 
 class_labels = ['Tomato Bacterial Spot', 'Tomato Early Blight', 'Tomato Late Blight', 'Tomato Leaf Mold',
                   'Tomato Septoria Leaf Spot', 'Tomato Spider Mites Two Spotted Spider Mite',
-                  'Tomato Target Spot', 'Tomato YellowLeaf Curl Virus', 'Tomato_Mosaic_Virus',
+                  'Tomato Target Spot', 'Tomato YellowLeaf Curl Virus', 'Tomato Mosaic Virus',
                   'Tomato Healthy']
 
 #loads the model
