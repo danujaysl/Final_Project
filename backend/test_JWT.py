@@ -7,10 +7,10 @@ SECRET_KEY = "akash"
 EXPIRATION_SECONDS = 3600/2  # 1 hour
 
 
-#def test_generate_token():
-    #user_id = 123
-    #token = generate_token(user_id)
-    #assert isinstance(token, bytes)
+def test_generate_token():
+    user_id = 123
+    token = generate_token(user_id)
+    assert isinstance(token, bytes)
 
 def test_decoded_jwt():
     user_id = '662b606cffd9fc6059f217e6'

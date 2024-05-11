@@ -15,18 +15,18 @@ def LoadModel():
     model = load_model(r'tomato_diseaseORG.h5')
     return model
 
-# predicts the image by its path
+#predicts the image by its path
 def predict_image_by_img_path(img_path,model):
 
     img = load_img(img_path, target_size=(256, 256))
 
-    # convert image into areay
+    #convert image into areay
     img_arr = img_to_array(img)
 
-    # Normalize pixel values to [0, 1]
+    #Normalize pixel values to [0, 1]
     img = img_arr/255
 
-    # Add batch dimension
+    #Add batch dimension
     img = np.expand_dims(img, axis=0)
 
     prediction = model.predict(img)
@@ -41,15 +41,15 @@ def predict_image_by_img_path(img_path,model):
 
     return (predicted_class,confidence)
 
-# predicts the raw image
+#predicts the raw image
 def predict_image(img,model):
     # convert image into areay
     img_arr = img_to_array(img)
 
-    # Normalize pixel values to [0, 1]
+    #Normalize pixel values to [0, 1]
     img = img_arr/255
 
-    # Add batch dimension
+    #Add batch dimension
     img = np.expand_dims(img, axis=0)
 
     prediction = model.predict(img)

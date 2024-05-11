@@ -39,12 +39,3 @@ def test_user_login(client):
     assert response.status_code == 200
     assert response.json['message'] == "success"
     assert 'token' in response.json
-
-
-
-# Add more test cases for other endpoints...
-
-
-# Example of testing an endpoint that requires authentication
-
-# Add more test cases for authenticated endpoints...
