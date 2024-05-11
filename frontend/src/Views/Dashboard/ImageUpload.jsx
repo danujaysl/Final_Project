@@ -98,7 +98,7 @@ const ImageUploader = () => {
       return;
     }
 
-    if (file.size > 1024 * 1024 * 5) { // 5MB limit (adjust as needed)
+    if (file.size > 1024 * 1024 * 5) { // 5MB limited
       alert('Image size exceeds the maximum limit of 5MB.');
       return;
     }
